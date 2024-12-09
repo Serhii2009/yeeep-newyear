@@ -1,0 +1,220 @@
+.nav-bar-main {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 20px 0;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 14px 20px;
+}
+
+.nav-bar-logo {
+  font-family: Fredoka;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.nav-bar-list {
+  display: none;
+}
+
+.nav-bar-mobile-icons {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-bar-full-btn {
+  display: none;
+}
+
+.nav-bar-full-btn-mob {
+  display: none;
+}
+
+@media only screen and (min-width: 768px) {
+  .nav-bar {
+    margin: 20px 32px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    gap: 20px;
+  }
+
+  .nav-bar-main {
+    flex-grow: 1;
+    margin: 0;
+    padding: 18px 20px;
+  }
+
+  .nav-bar-logo {
+    font-size: 20px;
+  }
+
+  .nav-bar-full-screen {
+    display: none;
+  }
+
+  .nav-bar-full-btn {
+    display: none;
+  }
+
+  .nav-bar-full-btn-mob {
+    position: relative;
+    display: flex;
+    color: #121212;
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 0 41px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    border: none;
+    align-items: center;
+    overflow: hidden;
+    transition: background-color 200ms ease, color 200ms ease;
+  }
+
+  .nav-bar-full-btn-mob:focus,
+  .nav-bar-full-btn-mob:active {
+    color: #ffffff;
+    background: transparent;
+  }
+
+  .nav-bar-full-btn-mob:before,
+  .nav-bar-full-btn-mob:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 2px;
+    width: 0;
+    background: #0047ab;
+    box-shadow: -1px -1px 5px 0px #0047ab, 7px 7px 20px 0px #0047ab,
+      4px 4px 5px 0px #0047ab;
+    transition: 400ms ease all;
+  }
+
+  .nav-bar-full-btn-mob:after {
+    right: inherit;
+    top: inherit;
+    left: 0;
+    bottom: 0;
+  }
+
+  .nav-bar-full-btn-mob:focus:before,
+  .nav-bar-full-btn-mob:focus:after,
+  .nav-bar-full-btn-mob:active:before,
+  .nav-bar-full-btn-mob:active:after {
+    width: 100%;
+    transition: 800ms ease all;
+  }
+}
+
+@media only screen and (min-width: 1440px) {
+  .nav-bar {
+    margin: 20px 100px 0;
+  }
+
+  .nav-bar-main {
+    flex-grow: 1;
+    margin: 0;
+    padding: 18px 20px;
+  }
+
+  .nav-bar-logo {
+    font-size: 20px;
+  }
+
+  .nav-bar-list {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    gap: 40px;
+    text-transform: uppercase;
+    margin-right: 80px;
+  }
+
+  .nav-bar-list li {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .nav-bar-list li:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    display: inline-block;
+    height: 1em;
+    width: 100%;
+    border-bottom: 1px solid;
+    margin-top: 10px;
+    opacity: 0;
+    -webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+    transition: opacity 0.35s, transform 0.35s;
+    -webkit-transform: scale(0, 1);
+    transform: scale(0, 1);
+  }
+
+  .nav-bar-list li:hover:after {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+
+  .nav-bar-mobile-icons {
+    display: none;
+  }
+
+  .nav-bar-full-btn-mob {
+    display: none;
+  }
+
+  .nav-bar-full-btn {
+    position: relative;
+    display: flex;
+    color: #121212;
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 0 32px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    border: none;
+    align-items: center;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .nav-bar-full-btn:hover {
+    color: #ffffff;
+    background: transparent;
+    box-shadow: none;
+  }
+  .nav-bar-full-btn:before,
+  .nav-bar-full-btn:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 2px;
+    width: 0;
+    background: #0047ab;
+    box-shadow: -1px -1px 5px 0px #0047ab, 7px 7px 20px 0px #0047ab,
+      4px 4px 5px 0px #0047ab;
+    transition: 400ms ease all;
+  }
+  .nav-bar-full-btn:after {
+    right: inherit;
+    top: inherit;
+    left: 0;
+    bottom: 0;
+  }
+  .nav-bar-full-btn:hover:before,
+  .nav-bar-full-btn:hover:after {
+    width: 100%;
+    transition: 800ms ease all;
+  }
+}
