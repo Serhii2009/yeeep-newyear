@@ -70,6 +70,50 @@
   display: none;
 }
 
+.modal-overlay {
+  position: fixed;
+  top: -90px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  transition: opacity 0.3s ease;
+}
+
+.modal-content {
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 440px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  border: 1px solid #333;
+  color: #fff;
+  font-family: 'Overpass', sans-serif;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  position: relative;
+  text-align: start;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.modal-content ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.modal-content li {
+  font-family: 'Overpass', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  text-transform: none;
+  margin: 1rem 0;
+}
+
 @media only screen and (min-width: 768px) {
   .nav-bar {
     margin: 20px 32px 0;
@@ -87,10 +131,6 @@
 
   .nav-bar-logo {
     font-size: 20px;
-  }
-
-  .nav-bar-full-screen {
-    display: none;
   }
 
   .nav-bar-full-btn {
@@ -146,6 +186,10 @@
   .nav-bar-full-btn-mob:active:after {
     width: 100%;
     transition: 800ms ease all;
+  }
+
+  .modal-content {
+    font-size: 0.92rem;
   }
 }
 
@@ -255,5 +299,9 @@
   .nav-bar-full-btn:hover:after {
     width: 100%;
     transition: 800ms ease all;
+  }
+
+  .modal-overlay {
+    display: none;
   }
 }
