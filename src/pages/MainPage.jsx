@@ -1,5 +1,11 @@
+import TimerCounter from '../components/TimerCounter/TimerCounter'
+
 const MainPage = () => {
-  return <div></div>
+  return (
+    <div>
+      <TimerCounter />
+    </div>
+  )
 }
 
 export default MainPage

@@ -1,0 +1,62 @@
+.timer {
+  margin-top: 218px;
+  margin-bottom: 288px;
+  text-align: center;
+}
+
+.timer-message {
+  font-family: 'Fredoka', serif;
+  font-size: 55px;
+  font-weight: 500;
+}
+
+.timer-numbers {
+  font-family: 'Fredoka', serif;
+  font-size: 55px;
+  font-weight: 500;
+}
+
+@media only screen and (min-width: 768px) {
+  .timer {
+    margin-top: 181px;
+    margin-bottom: 261px;
+    text-align: center;
+  }
+
+  .timer-message {
+    font-family: 'Fredoka', serif;
+    font-size: 100px;
+    font-weight: 500;
+  }
+
+  .timer-numbers {
+    font-family: 'Fredoka', serif;
+    font-size: 100px;
+    font-weight: 500;
+  }
+}
+
+@media only screen and (min-width: 1440px) {
+  .timer {
+    margin-top: 224px;
+    margin-bottom: 337px;
+    text-align: center;
+    transition: margin 0.3s ease;
+  }
+
+  .timer.fullscreen {
+    margin-top: 270px;
+  }
+
+  .timer-message {
+    font-family: 'Fredoka', serif;
+    font-size: 120px;
+    font-weight: 500;
+  }
+
+  .timer-numbers {
+    font-family: 'Fredoka', serif;
+    font-size: 120px;
+    font-weight: 500;
+  }
+}

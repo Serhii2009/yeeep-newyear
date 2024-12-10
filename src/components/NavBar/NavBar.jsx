@@ -103,7 +103,10 @@ const NavBar = () => {
                 <li key={index}>
                   {item.path ? (
                     <Link to={item.path} onClick={() => setIsModalOpen(false)}>
-                      <strong>{item.label}:</strong> {item.info}
+                      <p className="fee">
+                        {' '}
+                        <strong>{item.label}:</strong> {item.info}
+                      </p>
                     </Link>
                   ) : (
                     <>
