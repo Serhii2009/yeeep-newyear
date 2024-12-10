@@ -101,7 +101,15 @@ const NavBar = () => {
             <ul>
               {navItems.map((item, index) => (
                 <li key={index}>
-                  <strong>{item.label}:</strong> {item.info}
+                  {item.path ? (
+                    <Link to={item.path} onClick={() => setIsModalOpen(false)}>
+                      <strong>{item.label}:</strong> {item.info}
+                    </Link>
+                  ) : (
+                    <>
+                      <strong>{item.label}:</strong> {item.info}
+                    </>
+                  )}
                 </li>
               ))}
             </ul>
