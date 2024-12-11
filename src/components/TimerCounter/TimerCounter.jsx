@@ -68,12 +68,15 @@ import './TimerCounter.css'
 import { useState, useEffect } from 'react'
 import screenfull from 'screenfull'
 import { assets } from '../../assets/assets'
-import TreeAnimation from '../TreeAnimation/TreeAnimation'
+import SnowAnimation from '../SnowAnimation/SnowAnimation'
+import TextAfterTimer from '../TextAfterTimer/TextAfterTimer'
 
 const TimerCounter = () => {
   const [timeLeft, setTimeLeft] = useState(5)
+  const [showTextAnimation, setShowTextAnimation] = useState(false)
+  const [hideTextAnimation, setHideTextAnimation] = useState(false)
   const [showButton, setShowButton] = useState(false)
-  const [showAnimation, setShowAnimation] = useState(false)
+  const [showTreeAnimation, setShowTreeAnimation] = useState(false)
   const [isFullScreen, setIsFullScreen] = useState(false)
 
   const [audio] = useState(new Audio(`${assets.theme_song}`))
@@ -85,7 +88,7 @@ const TimerCounter = () => {
       }, 1000)
       return () => clearInterval(timer)
     } else {
-      setShowButton(true)
+      setShowTextAnimation(true)
     }
   }, [timeLeft])
 
@@ -100,6 +103,11 @@ const TimerCounter = () => {
     }
   }, [])
 
+  const handleTextAnimationEnd = () => {
+    setHideTextAnimation(true)
+    setShowButton(true)
+  }
+
   const formatTime = (seconds) => {
     const hrs = String(Math.floor(seconds / 3600)).padStart(2, '0')
     const mins = String(Math.floor((seconds % 3600) / 60)).padStart(2, '0')
@@ -108,18 +116,27 @@ const TimerCounter = () => {
   }
 
   const handleButtonClick = () => {
-    setShowAnimation(true)
+    setShowTreeAnimation(true)
     audio.play()
   }
 
   return (
     <div className={`timer ${isFullScreen ? 'fullscreen' : ''}`}>
-      {showAnimation ? (
-        <TreeAnimation />
+      {showTreeAnimation ? (
+        <SnowAnimation />
       ) : showButton ? (
-        <button className="start-animation-button" onClick={handleButtonClick}>
-          Click to see the miracle!
-        </button>
+        <>
+          <h1 className="kreep">
+            <button
+              className="start-animation-button"
+              onClick={handleButtonClick}
+            >
+              Click to see the miracle!
+            </button>
+          </h1>
+        </>
+      ) : showTextAnimation && !hideTextAnimation ? (
+        <TextAfterTimer onAnimationEnd={handleTextAnimationEnd} />
       ) : (
         <h1 className="timer-numbers">{formatTime(timeLeft)}</h1>
       )}

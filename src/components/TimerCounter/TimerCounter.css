@@ -16,6 +16,56 @@
   font-weight: 500;
 }
 
+.start-animation-button {
+  color: #ffffff;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 14px 30px;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  align-items: center;
+  overflow: hidden;
+  cursor: pointer;
+  margin-top: 0;
+  text-align: center;
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+}
+
+.start-animation-button:hover {
+  background-color: #555555;
+  color: white;
+}
+.start-animation-button:hover {
+  background-color: #555555;
+  color: white;
+}
+
+/*Bounce*/
+@keyframes kreep {
+  0% {
+    -webkit-transform: scale(1.1, 0.9);
+    transform: scale(1.1, 0.9);
+  }
+  50% {
+    -webkit-transform: scale(0.9, 1.1) translateY(-0.5rem);
+  }
+  70% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+
+h1.kreep {
+  display: inline-block;
+  animation: kreep 0.7s ease 2s infinite alternate;
+}
+
+h1.kreep:hover {
+  animation: none;
+}
+
 @media only screen and (min-width: 768px) {
   .timer {
     margin-top: 181px;
@@ -33,6 +83,10 @@
     font-family: 'Fredoka', serif;
     font-size: 100px;
     font-weight: 500;
+  }
+
+  .start-animation-button {
+    margin-top: 30px;
   }
 }
 
@@ -58,5 +112,55 @@
     font-family: 'Fredoka', serif;
     font-size: 120px;
     font-weight: 500;
+  }
+
+  .start-animation-button {
+    color: #ffffff;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 16px 32px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    align-items: center;
+    overflow: hidden;
+    cursor: pointer;
+    margin-top: 50px;
+    text-align: center;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+  }
+
+  .start-animation-button:hover {
+    background-color: #555555;
+    color: white;
+  }
+  .start-animation-button:hover {
+    background-color: #555555;
+    color: white;
+  }
+
+  /*Bounce*/
+  @keyframes kreep {
+    0% {
+      -webkit-transform: scale(1.1, 0.9);
+      transform: scale(1.1, 0.9);
+    }
+    50% {
+      -webkit-transform: scale(0.9, 1.1) translateY(-0.5rem);
+    }
+    70% {
+      -webkit-transform: scale(1);
+      transform: scale(1);
+    }
+  }
+
+  h1.kreep {
+    display: inline-block;
+    animation: kreep 0.7s ease 2s infinite alternate;
+  }
+
+  h1.kreep:hover {
+    animation: none;
   }
 }

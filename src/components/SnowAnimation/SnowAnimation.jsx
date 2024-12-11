@@ -1,6 +1,6 @@
-import './TreeAnimation.scss'
+import './SnowAnimation.scss'
 
-const TreeAnimation = () => {
+const SnowAnimation = () => {
   return (
     <div>
       <div className="snow"></div>
@@ -207,4 +207,4 @@ const TreeAnimation = () => {
   )
 }
 
-export default TreeAnimation
+export default SnowAnimation
