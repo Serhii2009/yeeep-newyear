@@ -62,14 +62,21 @@
 
 // export default TimerCounter
 
+// ----------------
+
 import './TimerCounter.css'
 import { useState, useEffect } from 'react'
 import screenfull from 'screenfull'
+import { assets } from '../../assets/assets'
+import TreeAnimation from '../TreeAnimation/TreeAnimation'
 
 const TimerCounter = () => {
-  const [timeLeft, setTimeLeft] = useState(30)
-  const [showMessage, setShowMessage] = useState(false)
+  const [timeLeft, setTimeLeft] = useState(5)
+  const [showButton, setShowButton] = useState(false)
+  const [showAnimation, setShowAnimation] = useState(false)
   const [isFullScreen, setIsFullScreen] = useState(false)
+
+  const [audio] = useState(new Audio(`${assets.theme_song}`))
 
   useEffect(() => {
     if (timeLeft > 0) {
@@ -78,7 +85,7 @@ const TimerCounter = () => {
       }, 1000)
       return () => clearInterval(timer)
     } else {
-      setShowMessage(true)
+      setShowButton(true)
     }
   }, [timeLeft])
 
@@ -100,10 +107,19 @@ const TimerCounter = () => {
     return `${hrs} : ${mins} : ${secs}`
   }
 
+  const handleButtonClick = () => {
+    setShowAnimation(true)
+    audio.play()
+  }
+
   return (
     <div className={`timer ${isFullScreen ? 'fullscreen' : ''}`}>
-      {showMessage ? (
-        <h1 className="timer-message">HELLO!</h1>
+      {showAnimation ? (
+        <TreeAnimation />
+      ) : showButton ? (
+        <button className="start-animation-button" onClick={handleButtonClick}>
+          Click to see the miracle!
+        </button>
       ) : (
         <h1 className="timer-numbers">{formatTime(timeLeft)}</h1>
       )}

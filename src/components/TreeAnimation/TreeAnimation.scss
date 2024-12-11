@@ -1,0 +1,46 @@
+body {
+  height: 100vh;
+  overflow: hidden;
+}
+
+@function random_range($min, $max) {
+  $rand: random();
+  $random_range: $min + floor($rand * (($max - $min) + 1));
+  @return $random_range;
+}
+
+.snow {
+  $total: 500;
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: white;
+  border-radius: 50%;
+
+  @for $i from 1 through $total {
+    $random-x: random(1000000) * 0.0001vw;
+    $random-offset: random_range(-100000, 100000) * 0.0001vw;
+    $random-x-end: $random-x + $random-offset;
+    $random-x-end-yoyo: $random-x + ($random-offset / 2);
+    $random-yoyo-time: random_range(20000, 70000) / 100000;
+    $random-yoyo-y: $random-yoyo-time * 90vh;
+    $random-scale: random(10000) * 0.0001;
+    $fall-duration: random_range(5, 20) * 1s;
+    $fall-delay: random_range(0, 3) * 0.6s;
+
+    &:nth-child(#{$i}) {
+      opacity: random(10000) * 0.0001;
+      transform: translate($random-x, -500px) scale($random-scale);
+      animation: fall-#{$i} $fall-duration linear infinite $fall-delay;
+    }
+
+    @keyframes fall-#{$i} {
+      0% {
+        transform: translate($random-x, -500px) scale($random-scale);
+      }
+      100% {
+        transform: translate($random-x-end-yoyo, 90vh) scale($random-scale);
+      }
+    }
+  }
+}
