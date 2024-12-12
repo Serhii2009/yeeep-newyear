@@ -70,7 +70,7 @@ import screenfull from 'screenfull'
 import { assets } from '../../assets/assets'
 import SnowAnimation from '../SnowAnimation/SnowAnimation'
 import TextAfterTimer from '../TextAfterTimer/TextAfterTimer'
-import Gift from '../Gift/Gift' // Імпортуємо компонент Gift
+import Gift from '../Gift/Gift'
 
 const TimerCounter = () => {
   const [timeLeft, setTimeLeft] = useState(5)
@@ -79,9 +79,28 @@ const TimerCounter = () => {
   const [showButton, setShowButton] = useState(false)
   const [showTreeAnimation, setShowTreeAnimation] = useState(false)
   const [isFullScreen, setIsFullScreen] = useState(false)
-  const [showGiftAnimation, setShowGiftAnimation] = useState(false) // Стейт для анімації Gift
-  const timerCompletedRef = useRef(false) // Для відстеження завершення таймера
+  const [showGiftAnimation, setShowGiftAnimation] = useState(false)
+  const [showVolumeIcon, setShowVolumeIcon] = useState(false)
+  const [volume, setVolume] = useState(1)
+  const [showVolumeControl, setShowVolumeControl] = useState(false)
+  const [showRestartIcon, setShowRestartIcon] = useState(false)
+  const [isPlaying, setIsPlaying] = useState(false)
+  const timerCompletedRef = useRef(false)
   const [audio] = useState(new Audio(`${assets.theme_song}`))
+
+  useEffect(() => {
+    audio.volume = volume
+
+    const handleAudioEnded = () => {
+      setShowRestartIcon(true) // Показуємо іконку після завершення пісні
+      setShowVolumeIcon(false) // Сховати іконку регулювання гучності
+    }
+
+    audio.addEventListener('ended', handleAudioEnded)
+    return () => {
+      audio.removeEventListener('ended', handleAudioEnded)
+    }
+  }, [volume, audio])
 
   useEffect(() => {
     if (timeLeft > 0) {
@@ -90,9 +109,9 @@ const TimerCounter = () => {
       }, 1000)
       return () => clearInterval(timer)
     } else {
-      timerCompletedRef.current = true // Таймер завершено
+      timerCompletedRef.current = true
       if (document.visibilityState === 'visible') {
-        setShowTextAnimation(true) // Якщо вкладка активна, запускаємо анімацію
+        setShowTextAnimation(true)
       }
     }
   }, [timeLeft])
@@ -100,7 +119,7 @@ const TimerCounter = () => {
   useEffect(() => {
     const handleVisibilityChange = () => {
       if (document.visibilityState === 'visible' && timerCompletedRef.current) {
-        setShowTextAnimation(true) // Запускаємо анімацію після повернення
+        setShowTextAnimation(true)
       }
     }
 
@@ -135,29 +154,53 @@ const TimerCounter = () => {
 
   const handleButtonClick = () => {
     setShowTreeAnimation(true)
+    setShowVolumeIcon(true) // Show volume icon when snow animation starts
+    setShowRestartIcon(false) // Hide restart icon if showing
     audio.play()
+    setIsPlaying(true)
 
-    // Запускаємо анімацію Gift через 10 секунд після анімації снігу
     setTimeout(() => {
       setShowGiftAnimation(true)
-    }, 10000) // 10 секунд після початку снігової анімації
+    }, 10000)
   }
+
+  const handleVolumeIconClick = () => {
+    setShowVolumeControl((prev) => !prev)
+  }
+
+  const handleVolumeChange = (e) => {
+    setVolume(e.target.value)
+  }
+
+  const handleRestartClick = () => {
+    setShowRestartIcon(false) // Hide the restart icon
+    audio.currentTime = 0 // Reset the song to the beginning
+    audio.play()
+    setIsPlaying(true)
+    setShowVolumeIcon(true)
+  }
+
+  useEffect(() => {
+    if (isPlaying && audio.current) {
+      audio.play()
+    } else if (audio.current) {
+      audio.pause()
+    }
+  }, [isPlaying, audio.current])
 
   return (
     <div className={`timer ${isFullScreen ? 'fullscreen' : ''}`}>
       {showTreeAnimation ? (
         <SnowAnimation />
       ) : showButton ? (
-        <>
-          <h1 className="kreep">
-            <button
-              className="start-animation-button"
-              onClick={handleButtonClick}
-            >
-              Click to see the miracle!
-            </button>
-          </h1>
-        </>
+        <h1 className="kreep">
+          <button
+            className="start-animation-button"
+            onClick={handleButtonClick}
+          >
+            Click to see the miracle!
+          </button>
+        </h1>
       ) : showTextAnimation && !hideTextAnimation ? (
         <TextAfterTimer onAnimationEnd={handleTextAnimationEnd} />
       ) : (
@@ -165,6 +208,41 @@ const TimerCounter = () => {
       )}
 
       {showGiftAnimation && <Gift />}
+
+      {showVolumeIcon && (
+        <div className="audio-controls">
+          <div className="volume-icon-container">
+            <img
+              src={assets.song_volume}
+              alt="Play Theme Song"
+              className="volume-icon"
+              onClick={handleVolumeIconClick}
+            />
+            {showVolumeControl && (
+              <input
+                type="range"
+                min="0"
+                max="1"
+                step="0.01"
+                value={volume}
+                onChange={handleVolumeChange}
+                className="volume-slider white-slider"
+              />
+            )}
+          </div>
+        </div>
+      )}
+
+      {showRestartIcon && (
+        <div className="audio-restart">
+          <img
+            src={assets.repeat_song}
+            alt="Restart Theme Song"
+            className="restart-icon"
+            onClick={handleRestartClick}
+          />
+        </div>
+      )}
     </div>
   )
 }

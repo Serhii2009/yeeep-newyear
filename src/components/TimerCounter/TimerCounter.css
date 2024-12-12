@@ -42,6 +42,26 @@
   color: white;
 }
 
+.audio-controls {
+  display: none;
+}
+
+.audio-restart {
+  position: fixed;
+  bottom: 44px;
+  right: 38px;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  z-index: 1000;
+}
+
+.restart-icon {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+
 /*Bounce*/
 @keyframes kreep {
   0% {
@@ -87,6 +107,11 @@ h1.kreep:hover {
 
   .start-animation-button {
     margin-top: 30px;
+  }
+
+  .audio-restart {
+    bottom: 52px;
+    right: 50px;
   }
 }
 
@@ -162,5 +187,60 @@ h1.kreep:hover {
 
   h1.kreep:hover {
     animation: none;
+  }
+
+  .audio-restart,
+  .audio-controls {
+    position: fixed;
+    bottom: 40px;
+    right: 38px;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    z-index: 1000;
+  }
+
+  .volume-icon-container {
+    position: relative;
+  }
+
+  .restart-icon,
+  .volume-icon {
+    width: 34px;
+    height: 34px;
+    cursor: pointer;
+  }
+
+  .volume-slider {
+    position: absolute;
+    bottom: 140px;
+    right: -54px;
+    transform-origin: bottom center;
+    transform: rotate(-90deg);
+    display: block;
+    background: #fff;
+    width: 150px;
+    height: 5px;
+    outline: none;
+    border-radius: 5px;
+    appearance: none;
+    cursor: pointer;
+  }
+
+  .volume-slider::-webkit-slider-thumb {
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: #fff;
+    cursor: pointer;
+  }
+
+  .volume-slider::-moz-range-thumb {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: #fff;
+    cursor: pointer;
   }
 }
