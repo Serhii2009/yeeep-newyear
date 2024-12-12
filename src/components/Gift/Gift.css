@@ -1,0 +1,61 @@
+.gift-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.gift-box {
+  position: absolute;
+  top: -100px;
+  left: 50%;
+  width: 100px;
+  height: 100px;
+  background-color: #ff6f61;
+  transform: translateX(-50%);
+  animation: fall 1.5s ease-in forwards, open-box 0.5s ease-out 1.5s forwards;
+}
+
+@keyframes fall {
+  to {
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+@keyframes open-box {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 0;
+  }
+}
+
+.gift-message-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: none;
+  fill: none;
+  opacity: 0;
+  animation: fade-in 0.8s ease-out forwards;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.gift-message {
+  font-size: 24px;
+  text-align: center;
+  background: none;
+}

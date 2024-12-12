@@ -6,7 +6,7 @@ const TextAfterTimer = ({ onAnimationEnd }) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       if (onAnimationEnd) onAnimationEnd()
-    }, 7000) // Тривалість анімації в мілісекундах
+    }, 6500) // Тривалість анімації в мілісекундах
     return () => clearTimeout(timer)
   }, [onAnimationEnd])
 

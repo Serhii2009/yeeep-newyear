@@ -65,11 +65,12 @@
 // ----------------
 
 import './TimerCounter.css'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import screenfull from 'screenfull'
 import { assets } from '../../assets/assets'
 import SnowAnimation from '../SnowAnimation/SnowAnimation'
 import TextAfterTimer from '../TextAfterTimer/TextAfterTimer'
+import Gift from '../Gift/Gift' // Імпортуємо компонент Gift
 
 const TimerCounter = () => {
   const [timeLeft, setTimeLeft] = useState(5)
@@ -78,7 +79,8 @@ const TimerCounter = () => {
   const [showButton, setShowButton] = useState(false)
   const [showTreeAnimation, setShowTreeAnimation] = useState(false)
   const [isFullScreen, setIsFullScreen] = useState(false)
-
+  const [showGiftAnimation, setShowGiftAnimation] = useState(false) // Стейт для анімації Gift
+  const timerCompletedRef = useRef(false) // Для відстеження завершення таймера
   const [audio] = useState(new Audio(`${assets.theme_song}`))
 
   useEffect(() => {
@@ -88,9 +90,25 @@ const TimerCounter = () => {
       }, 1000)
       return () => clearInterval(timer)
     } else {
-      setShowTextAnimation(true)
+      timerCompletedRef.current = true // Таймер завершено
+      if (document.visibilityState === 'visible') {
+        setShowTextAnimation(true) // Якщо вкладка активна, запускаємо анімацію
+      }
     }
   }, [timeLeft])
+
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible' && timerCompletedRef.current) {
+        setShowTextAnimation(true) // Запускаємо анімацію після повернення
+      }
+    }
+
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange)
+    }
+  }, [])
 
   useEffect(() => {
     if (screenfull.isEnabled) {
@@ -118,6 +136,11 @@ const TimerCounter = () => {
   const handleButtonClick = () => {
     setShowTreeAnimation(true)
     audio.play()
+
+    // Запускаємо анімацію Gift через 10 секунд після анімації снігу
+    setTimeout(() => {
+      setShowGiftAnimation(true)
+    }, 10000) // 10 секунд після початку снігової анімації
   }
 
   return (
@@ -140,6 +163,8 @@ const TimerCounter = () => {
       ) : (
         <h1 className="timer-numbers">{formatTime(timeLeft)}</h1>
       )}
+
+      {showGiftAnimation && <Gift />}
     </div>
   )
 }
