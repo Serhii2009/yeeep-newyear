@@ -154,14 +154,14 @@ const TimerCounter = () => {
 
   const handleButtonClick = () => {
     setShowTreeAnimation(true)
-    setShowVolumeIcon(true) // Show volume icon when snow animation starts
-    setShowRestartIcon(false) // Hide restart icon if showing
+    setShowVolumeIcon(true)
+    setShowRestartIcon(false)
     audio.play()
     setIsPlaying(true)
 
     setTimeout(() => {
       setShowGiftAnimation(true)
-    }, 10000)
+    }, 7900)
   }
 
   const handleVolumeIconClick = () => {
@@ -173,8 +173,8 @@ const TimerCounter = () => {
   }
 
   const handleRestartClick = () => {
-    setShowRestartIcon(false) // Hide the restart icon
-    audio.currentTime = 0 // Reset the song to the beginning
+    setShowRestartIcon(false)
+    audio.currentTime = 0
     audio.play()
     setIsPlaying(true)
     setShowVolumeIcon(true)
