@@ -70,7 +70,6 @@ import screenfull from 'screenfull'
 import { assets } from '../../assets/assets'
 import SnowAnimation from '../SnowAnimation/SnowAnimation'
 import TextAfterTimer from '../TextAfterTimer/TextAfterTimer'
-import Gift from '../Gift/Gift'
 
 const TimerCounter = () => {
   const [timeLeft, setTimeLeft] = useState(5)
@@ -79,21 +78,28 @@ const TimerCounter = () => {
   const [showButton, setShowButton] = useState(false)
   const [showTreeAnimation, setShowTreeAnimation] = useState(false)
   const [isFullScreen, setIsFullScreen] = useState(false)
-  const [showGiftAnimation, setShowGiftAnimation] = useState(false)
   const [showVolumeIcon, setShowVolumeIcon] = useState(false)
   const [volume, setVolume] = useState(1)
   const [showVolumeControl, setShowVolumeControl] = useState(false)
-  const [showRestartIcon, setShowRestartIcon] = useState(false)
+  // eslint-disable-next-line no-unused-vars
   const [isPlaying, setIsPlaying] = useState(false)
+  const [showSongSelectionIcon, setShowSongSelectionIcon] = useState(false)
+  const [showSongModal, setShowSongModal] = useState(false)
   const timerCompletedRef = useRef(false)
-  const [audio] = useState(new Audio(`${assets.theme_song}`))
+  const [audio, setAudio] = useState(new Audio(`${assets.theme_song}`))
+
+  const songs = [
+    { title: 'Winter Wonderland', author: 'Artist A', url: `${assets.song1}` },
+    { title: 'Silent Night', author: 'Artist B', url: `${assets.song2}` },
+    { title: 'Jingle Bells', author: 'Artist C', url: `${assets.song3}` },
+  ]
 
   useEffect(() => {
     audio.volume = volume
 
     const handleAudioEnded = () => {
-      setShowRestartIcon(true) // Показуємо іконку після завершення пісні
-      setShowVolumeIcon(false) // Сховати іконку регулювання гучності
+      setShowSongSelectionIcon(true)
+      setShowVolumeIcon(false)
     }
 
     audio.addEventListener('ended', handleAudioEnded)
@@ -155,13 +161,8 @@ const TimerCounter = () => {
   const handleButtonClick = () => {
     setShowTreeAnimation(true)
     setShowVolumeIcon(true)
-    setShowRestartIcon(false)
     audio.play()
     setIsPlaying(true)
-
-    setTimeout(() => {
-      setShowGiftAnimation(true)
-    }, 7900)
   }
 
   const handleVolumeIconClick = () => {
@@ -172,21 +173,19 @@ const TimerCounter = () => {
     setVolume(e.target.value)
   }
 
-  const handleRestartClick = () => {
-    setShowRestartIcon(false)
-    audio.currentTime = 0
-    audio.play()
-    setIsPlaying(true)
-    setShowVolumeIcon(true)
+  const handleSongSelectionIconClick = () => {
+    setShowSongModal((prev) => !prev)
   }
 
-  useEffect(() => {
-    if (isPlaying && audio.current) {
-      audio.play()
-    } else if (audio.current) {
-      audio.pause()
-    }
-  }, [isPlaying, audio.current])
+  const handleSongSelect = (song) => {
+    audio.pause()
+    const newAudio = new Audio(song.url)
+    newAudio.volume = volume
+    setAudio(newAudio)
+    newAudio.play()
+    setIsPlaying(true)
+    setShowSongModal(false)
+  }
 
   return (
     <div className={`timer ${isFullScreen ? 'fullscreen' : ''}`}>
@@ -207,14 +206,12 @@ const TimerCounter = () => {
         <h1 className="timer-numbers">{formatTime(timeLeft)}</h1>
       )}
 
-      {showGiftAnimation && <Gift />}
-
       {showVolumeIcon && (
         <div className="audio-controls">
           <div className="volume-icon-container">
             <img
               src={assets.song_volume}
-              alt="Play Theme Song"
+              alt="Volume Control"
               className="volume-icon"
               onClick={handleVolumeIconClick}
             />
@@ -233,14 +230,27 @@ const TimerCounter = () => {
         </div>
       )}
 
-      {showRestartIcon && (
-        <div className="audio-restart">
+      {showSongSelectionIcon && (
+        <div
+          className="song-icon-container"
+          onClick={handleSongSelectionIconClick}
+        >
           <img
-            src={assets.repeat_song}
-            alt="Restart Theme Song"
-            className="restart-icon"
-            onClick={handleRestartClick}
+            src={assets.song_lib}
+            alt="Choose a Song"
+            className="library-icon"
           />
+          {showSongModal && (
+            <div className="song-modal">
+              <ul>
+                {songs.map((song, index) => (
+                  <li key={index} onClick={() => handleSongSelect(song)}>
+                    <strong>{song.title}</strong> - {song.author}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
       )}
     </div>
