@@ -70,15 +70,16 @@ import screenfull from 'screenfull'
 import { assets } from '../../assets/assets'
 import SnowAnimation from '../SnowAnimation/SnowAnimation'
 import TextAfterTimer from '../TextAfterTimer/TextAfterTimer'
-import ConfettiEffect from '../ConfettiEffect/ConfettiEffect'
+import Gift from '../Gift/Gift'
 
 const TimerCounter = () => {
   const [timeLeft, setTimeLeft] = useState(5)
+  const [showTimer, setShowTimer] = useState(true)
   const [showTextAnimation, setShowTextAnimation] = useState(false)
   const [hideTextAnimation, setHideTextAnimation] = useState(false)
   const [showButton, setShowButton] = useState(false)
   const [startSnowAnimation, setStartSnowAnimation] = useState(false)
-  const [startConfettiAnimation, setStartConfettiAnimation] = useState(false)
+  const [showGift, setShowGift] = useState(false)
   const [isFullScreen, setIsFullScreen] = useState(false)
   const [volume, setVolume] = useState(1)
   const [showVolumeControl, setShowVolumeControl] = useState(false)
@@ -164,13 +165,13 @@ const TimerCounter = () => {
   }
 
   const handleButtonClick = () => {
-    setStartSnowAnimation(true)
+    setShowTimer(false)
+    setShowButton(false)
+    setStartSnowAnimation(true) // Сніг продовжує йти
     setShowVolumeIcon(true)
     audio.play()
 
-    setTimeout(() => {
-      setStartConfettiAnimation(true)
-    }, 7000)
+    setShowGift(true)
   }
 
   const formatTime = (seconds) => {
@@ -205,31 +206,26 @@ const TimerCounter = () => {
 
   return (
     <div className={`timer ${isFullScreen ? 'fullscreen' : ''}`}>
-      {startSnowAnimation || startConfettiAnimation ? (
-        <>
-          {startSnowAnimation && <SnowAnimation />}
-          {startConfettiAnimation && (
-            <ConfettiEffect
-              style={{
-                bacground: 'none',
-              }}
-            />
-          )}
-        </>
-      ) : showButton ? (
+      {/* Снігова анімація завжди активна */}
+      {startSnowAnimation && <SnowAnimation />}
+
+      {/* Показ анімації подарунка */}
+      {showGift && <Gift />}
+
+      {showButton ? (
         <h1 className="kreep">
           <button
             className="start-animation-button"
             onClick={handleButtonClick}
           >
-            Click to see the miracle!
+            Click, to get your gift show!
           </button>
         </h1>
       ) : showTextAnimation && !hideTextAnimation ? (
         <TextAfterTimer onAnimationEnd={handleTextAnimationEnd} />
-      ) : (
+      ) : showTimer ? (
         <h1 className="timer-numbers">{formatTime(timeLeft)}</h1>
-      )}
+      ) : null}
 
       {showVolumeIcon && (
         <div className="audio-controls">

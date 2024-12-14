@@ -8,6 +8,7 @@ import song_volume from './song_volume.svg'
 import song_lib from './song_lib.svg'
 import snowman from './snowman.gif'
 import candles from './candles.gif'
+import energy_wish from './energy_wish.svg'
 
 export const assets = {
   side_bar_mobile,
@@ -20,4 +21,5 @@ export const assets = {
   candles,
   last_christmas,
   snowman_song,
+  energy_wish,
 }

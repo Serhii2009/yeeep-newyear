@@ -1,91 +1,29 @@
-/* .animation-container {
+.gift {
   display: flex;
   justify-content: center;
+}
+
+.gift-words {
+  display: flex;
   align-items: center;
-  margin-top: 260px;
-  overflow: hidden;
-  background: none;
+  background-color: #e0eefc;
+  max-width: 330px;
+  height: 60px;
+  border-radius: 16px;
+  padding: 17px 20px;
 }
 
-.animation-container.fullscreen {
-  margin-top: 340px;
+.gift-energy-wish {
+  width: 24px;
+  height: 24px;
+  background-color: #e0eefc;
 }
 
-.explosion-point {
-  width: 20px;
-  height: 20px;
-  background: white;
-  border-radius: 50%;
-  animation: point-fade-in 1s ease-out forwards,
-    explosion 0.5s ease-out 1s forwards;
-  box-shadow: 0 0 30px 10px white;
+.gift-random-text {
+  margin-left: 6px;
+  background-color: #e0eefc;
+  color: #0583f2;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
+    'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-size: 14px;
 }
-
-.laser-ring {
-  position: absolute;
-  width: 0;
-  height: 0;
-  border: 2px solid white;
-  border-radius: 50%;
-  opacity: 0;
-  animation: laser-expand 1s ease-out 1.3s forwards;
-  pointer-events: none;
-}
-
-.laser-text {
-  position: absolute;
-  font-size: 3rem;
-  font-family: Arial, sans-serif;
-  font-weight: bold;
-  color: white;
-  opacity: 0;
-  animation: text-appear 1s ease-out 2.1s forwards;
-  background: none;
-}
-
-@keyframes point-fade-in {
-  0% {
-    opacity: 0;
-    transform: scale(0.2);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-@keyframes explosion {
-  0% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(10);
-    opacity: 0;
-    box-shadow: 0 0 50px 20px rgba(255, 255, 255, 0);
-  }
-}
-
-@keyframes laser-expand {
-  0% {
-    width: 0;
-    height: 0;
-    opacity: 1;
-  }
-  100% {
-    width: 150vw;
-    height: 150vw;
-    opacity: 0;
-  }
-}
-
-@keyframes text-appear {
-  0% {
-    opacity: 0;
-    transform: scale(0.8);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-} */
