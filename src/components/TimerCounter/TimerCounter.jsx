@@ -78,20 +78,30 @@ const TimerCounter = () => {
   const [showButton, setShowButton] = useState(false)
   const [showTreeAnimation, setShowTreeAnimation] = useState(false)
   const [isFullScreen, setIsFullScreen] = useState(false)
-  const [showVolumeIcon, setShowVolumeIcon] = useState(false)
   const [volume, setVolume] = useState(1)
   const [showVolumeControl, setShowVolumeControl] = useState(false)
-  // eslint-disable-next-line no-unused-vars
-  const [isPlaying, setIsPlaying] = useState(false)
+  const [showVolumeIcon, setShowVolumeIcon] = useState(false)
   const [showSongSelectionIcon, setShowSongSelectionIcon] = useState(false)
   const [showSongModal, setShowSongModal] = useState(false)
-  const timerCompletedRef = useRef(false)
   const [audio, setAudio] = useState(new Audio(`${assets.theme_song}`))
+  const timerCompletedRef = useRef(false)
 
   const songs = [
-    { title: 'Winter Wonderland', author: 'Artist A', url: `${assets.song1}` },
-    { title: 'Silent Night', author: 'Artist B', url: `${assets.song2}` },
-    { title: 'Jingle Bells', author: 'Artist C', url: `${assets.song3}` },
+    {
+      title: 'Last Christmas',
+      author: 'Wham!',
+      url: `${assets.last_christmas}`,
+    },
+    {
+      title: 'Jingle Bells',
+      author: 'Bobby Helms',
+      url: `${assets.theme_song}`,
+    },
+    {
+      title: 'Snowman',
+      author: 'Sia',
+      url: `${assets.snowman_song}`,
+    },
   ]
 
   useEffect(() => {
@@ -162,7 +172,6 @@ const TimerCounter = () => {
     setShowTreeAnimation(true)
     setShowVolumeIcon(true)
     audio.play()
-    setIsPlaying(true)
   }
 
   const handleVolumeIconClick = () => {
@@ -183,8 +192,9 @@ const TimerCounter = () => {
     newAudio.volume = volume
     setAudio(newAudio)
     newAudio.play()
-    setIsPlaying(true)
+    setShowVolumeIcon(true)
     setShowSongModal(false)
+    setShowSongSelectionIcon(false)
   }
 
   return (
