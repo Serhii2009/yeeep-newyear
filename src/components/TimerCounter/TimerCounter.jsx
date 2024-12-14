@@ -70,13 +70,15 @@ import screenfull from 'screenfull'
 import { assets } from '../../assets/assets'
 import SnowAnimation from '../SnowAnimation/SnowAnimation'
 import TextAfterTimer from '../TextAfterTimer/TextAfterTimer'
+import ConfettiEffect from '../ConfettiEffect/ConfettiEffect'
 
 const TimerCounter = () => {
   const [timeLeft, setTimeLeft] = useState(5)
   const [showTextAnimation, setShowTextAnimation] = useState(false)
   const [hideTextAnimation, setHideTextAnimation] = useState(false)
   const [showButton, setShowButton] = useState(false)
-  const [showTreeAnimation, setShowTreeAnimation] = useState(false)
+  const [startSnowAnimation, setStartSnowAnimation] = useState(false)
+  const [startConfettiAnimation, setStartConfettiAnimation] = useState(false)
   const [isFullScreen, setIsFullScreen] = useState(false)
   const [volume, setVolume] = useState(1)
   const [showVolumeControl, setShowVolumeControl] = useState(false)
@@ -161,17 +163,21 @@ const TimerCounter = () => {
     setShowButton(true)
   }
 
+  const handleButtonClick = () => {
+    setStartSnowAnimation(true)
+    setShowVolumeIcon(true)
+    audio.play()
+
+    setTimeout(() => {
+      setStartConfettiAnimation(true)
+    }, 7000)
+  }
+
   const formatTime = (seconds) => {
     const hrs = String(Math.floor(seconds / 3600)).padStart(2, '0')
     const mins = String(Math.floor((seconds % 3600) / 60)).padStart(2, '0')
     const secs = String(seconds % 60).padStart(2, '0')
     return `${hrs} : ${mins} : ${secs}`
-  }
-
-  const handleButtonClick = () => {
-    setShowTreeAnimation(true)
-    setShowVolumeIcon(true)
-    audio.play()
   }
 
   const handleVolumeIconClick = () => {
@@ -199,8 +205,17 @@ const TimerCounter = () => {
 
   return (
     <div className={`timer ${isFullScreen ? 'fullscreen' : ''}`}>
-      {showTreeAnimation ? (
-        <SnowAnimation />
+      {startSnowAnimation || startConfettiAnimation ? (
+        <>
+          {startSnowAnimation && <SnowAnimation />}
+          {startConfettiAnimation && (
+            <ConfettiEffect
+              style={{
+                bacground: 'none',
+              }}
+            />
+          )}
+        </>
       ) : showButton ? (
         <h1 className="kreep">
           <button
