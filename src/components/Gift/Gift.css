@@ -1,9 +1,13 @@
-.gift {
+.wish {
   display: flex;
   justify-content: center;
+  opacity: 0;
+  animation: fadeIn 10s forwards;
+  background: none;
+  margin-top: -200px;
 }
 
-.gift-words {
+.wish-words {
   display: flex;
   align-items: center;
   background-color: #e0eefc;
@@ -13,17 +17,101 @@
   padding: 17px 20px;
 }
 
-.gift-energy-wish {
-  width: 24px;
-  height: 24px;
-  background-color: #e0eefc;
-}
-
-.gift-random-text {
+.wish-random-text {
   margin-left: 6px;
   background-color: #e0eefc;
   color: #0583f2;
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
-    'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-family: 'Yuji Mai', serif;
+  font-style: normal;
   font-size: 14px;
+}
+
+/* Анімація */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes shake {
+  0% {
+    transform: translateY(0);
+  }
+  25% {
+    transform: translateY(-4px);
+  }
+  50% {
+    transform: translateY(4px);
+  }
+  75% {
+    transform: translateY(-4px);
+  }
+  100% {
+    transform: translateY(4px);
+  }
+}
+
+.gift-emoji {
+  display: inline-block;
+  background: none;
+  margin-top: 30px;
+  font-size: 50px;
+  animation: fadeIn 10s forwards,
+    kreep 2s cubic-bezier(0.36, 0.07, 0.19, 1) infinite;
+  cursor: pointer;
+}
+
+@keyframes kreep {
+  0% {
+    transform: scale(1.1, 0.9);
+  }
+  50% {
+    transform: scale(0.9, 1.1) translateY(-0.5rem);
+  }
+  70% {
+    transform: scale(1);
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .wish {
+    margin-top: -140px;
+  }
+
+  .wish-words {
+    max-width: 600px;
+  }
+
+  .wish-random-text {
+    font-size: 18px;
+  }
+
+  .gift-emoji {
+    margin-top: 40px;
+    font-size: 60px;
+  }
+}
+
+@media only screen and (min-width: 1440px) {
+  .wish {
+    margin-top: -160px;
+  }
+
+  .wish-words {
+    max-width: 800px;
+  }
+
+  .wish-random-text {
+    font-size: 18px;
+  }
+
+  .gift-emoji {
+    margin-top: 50px;
+    font-size: 70px;
+  }
 }
