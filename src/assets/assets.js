@@ -10,6 +10,12 @@ import snowman from './snowman.gif'
 import candles from './candles.gif'
 import energy_wish from './energy_wish.svg'
 
+// import Gift1 from './Gift1.pdf'
+// import Gift2 from './Gift2.pdf'
+// import Gift3 from './Gift3.pdf'
+// import Gift4 from './Gift4.pdf'
+// import Gift5 from './Gift15.pdf'
+
 export const assets = {
   side_bar_mobile,
   full_screen_mode,
@@ -22,4 +28,10 @@ export const assets = {
   last_christmas,
   snowman_song,
   energy_wish,
+
+  // Gift1,
+  // Gift2,
+  // Gift3,
+  // Gift4,
+  // Gift5,
 }
