@@ -10,7 +10,8 @@
 .wish-words {
   display: flex;
   align-items: center;
-  background-color: #e0eefc;
+  background: none;
+  border: 2px solid #ecf6ff;
   max-width: 330px;
   height: 60px;
   border-radius: 16px;
@@ -19,8 +20,8 @@
 
 .wish-random-text {
   margin-left: 6px;
-  background-color: #e0eefc;
-  color: #0583f2;
+  background: none;
+  color: #f2f9ff;
   font-family: 'Yuji Mai', serif;
   font-style: normal;
   font-size: 14px;
