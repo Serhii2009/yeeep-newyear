@@ -5,11 +5,11 @@ import { useState } from 'react'
 
 const Gift = () => {
   const giftFiles = [
-    '/public/Gift1.pdf',
-    '/public/Gift2.pdf',
-    '/public/Gift3.pdf',
-    '/public/Gift4.pdf',
-    '/public/Gift5.pdf',
+    '/Gift1.pdf',
+    '/Gift2.pdf',
+    '/Gift3.pdf',
+    '/Gift4.pdf',
+    '/Gift5.pdf',
   ]
 
   const [randomGift, setRandomGift] = useState(
