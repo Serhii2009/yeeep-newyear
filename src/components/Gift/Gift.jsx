@@ -5,11 +5,11 @@ import { useState } from 'react'
 
 const Gift = () => {
   const giftFiles = [
-    '/src/assets/Gift1.pdf',
-    '/src/assets/Gift2.pdf',
-    '/src/assets/Gift3.pdf',
-    '/src/assets/Gift4.pdf',
-    '/src/assets/Gift5.pdf',
+    '/public/Gift1.pdf',
+    '/public/Gift2.pdf',
+    '/public/Gift3.pdf',
+    '/public/Gift4.pdf',
+    '/public/Gift5.pdf',
   ]
 
   const [randomGift, setRandomGift] = useState(
@@ -25,7 +25,8 @@ const Gift = () => {
     const randomFile = giftFiles[Math.floor(Math.random() * giftFiles.length)]
     setSelectedGift(randomFile)
     localStorage.setItem('userGift', JSON.stringify(randomFile))
-    window.open(randomFile, '_blank')
+    const fileUrl = window.location.origin + randomFile
+    window.open(fileUrl, '_blank')
   }
 
   return (
