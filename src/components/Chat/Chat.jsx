@@ -30,11 +30,14 @@ const Chat = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:5000/api/messages', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, text }),
-      })
+      const response = await fetch(
+        'https://yeeep-newyear-backend.onrender.com/api/messages',
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, text }),
+        }
+      )
 
       const newMessage = await response.json()
       setMessages([newMessage, ...messages]) // Додаємо нове повідомлення зверху
