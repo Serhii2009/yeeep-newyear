@@ -9,6 +9,9 @@ import song_lib from './song_lib.svg'
 import snowman from './snowman.gif'
 import candles from './candles.gif'
 import energy_wish from './energy_wish.svg'
+import arrow_top from './arrow_top.svg'
+import arrow_down from './arrow_down.svg'
+import sent_message from './sent_message.svg'
 
 // import Gift1 from './Gift1.pdf'
 // import Gift2 from './Gift2.pdf'
@@ -28,6 +31,9 @@ export const assets = {
   last_christmas,
   snowman_song,
   energy_wish,
+  arrow_top,
+  arrow_down,
+  sent_message,
 
   // Gift1,
   // Gift2,
