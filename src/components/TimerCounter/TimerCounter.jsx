@@ -89,6 +89,7 @@ const TimerCounter = () => {
   const [showSongModal, setShowSongModal] = useState(false)
   const [audio, setAudio] = useState(new Audio(`${assets.theme_song}`))
   const timerCompletedRef = useRef(false)
+  const isMobile = useRef(false)
 
   const songs = [
     {
@@ -109,6 +110,12 @@ const TimerCounter = () => {
   ]
 
   useEffect(() => {
+    // Визначаємо мобільний пристрій
+    isMobile.current =
+      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+        navigator.userAgent
+      ) || window.matchMedia('(max-width: 768px)').matches
+
     audio.volume = volume
 
     const handleAudioEnded = () => {
@@ -139,7 +146,16 @@ const TimerCounter = () => {
   useEffect(() => {
     const handleVisibilityChange = () => {
       if (document.visibilityState === 'visible' && timerCompletedRef.current) {
-        setShowTextAnimation(true)
+        if (isMobile.current) {
+          audio.currentTime = 0 // Для мобільних — почати з початку
+          audio.play().catch(() => {
+            console.log('Автоматичне відтворення заборонено браузером.')
+          })
+        }
+      } else {
+        if (isMobile.current) {
+          audio.pause() // Зупиняємо лише для мобільних
+        }
       }
     }
 
@@ -147,7 +163,7 @@ const TimerCounter = () => {
     return () => {
       document.removeEventListener('visibilitychange', handleVisibilityChange)
     }
-  }, [])
+  }, [audio])
 
   useEffect(() => {
     if (screenfull.isEnabled) {
@@ -168,10 +184,9 @@ const TimerCounter = () => {
   const handleButtonClick = () => {
     setShowTimer(false)
     setShowButton(false)
-    setStartSnowAnimation(true) // Сніг продовжує йти
+    setStartSnowAnimation(true)
     setShowVolumeIcon(true)
     audio.play()
-
     setShowGift(true)
   }
 
@@ -207,10 +222,7 @@ const TimerCounter = () => {
 
   return (
     <div className={`timer ${isFullScreen ? 'fullscreen' : ''}`}>
-      {/* Снігова анімація завжди активна */}
       {startSnowAnimation && <SnowAnimation />}
-
-      {/* Показ анімації подарунка */}
       {showGift && <Gift />}
       {showGift && <Chat />}
 
