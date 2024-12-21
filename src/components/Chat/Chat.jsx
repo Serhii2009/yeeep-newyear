@@ -1,38 +1,88 @@
 import './Chat.css'
+import { useState, useEffect } from 'react'
 import { assets } from '../../assets/assets'
 
 const Chat = () => {
+  const [name, setName] = useState('')
+  const [text, setText] = useState('')
+  const [messages, setMessages] = useState([])
+
+  // Завантаження повідомлень із сервера
+  useEffect(() => {
+    const fetchMessages = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/api/messages')
+        const data = await response.json()
+        setMessages(data)
+      } catch (error) {
+        console.error('Error fetching messages:', error)
+      }
+    }
+
+    fetchMessages()
+  }, [])
+
+  // Відправлення повідомлення
+  const handleSendMessage = async () => {
+    if (!name || !text) {
+      alert('Please enter your name and message!')
+      return
+    }
+
+    try {
+      const response = await fetch('http://localhost:5000/api/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, text }),
+      })
+
+      const newMessage = await response.json()
+      setMessages([newMessage, ...messages]) // Додаємо нове повідомлення зверху
+      setText('') // Очищення текстового поля
+    } catch (error) {
+      console.error('Error sending message:', error)
+    }
+  }
+
   return (
     <div className="chat">
-      <p className="chat-online-counter">
-        xxx <span>.</span>
-      </p>
-      <h3 className="chat-section-name">Chat</h3>
-      <img className="chat-arrow-top" src={assets.arrow_top} alt="" />
-      <img className="chat-arrow-down" src={assets.arrow_down} alt="" />
+      <div className="chat-header">
+        <h3>Chat</h3>
+      </div>
 
       <div className="chat-message-section">
         <div className="chat-message-field">
-          <select name="select" aria-label="Role" className="custom-select">
-            <option value="" disabled selected hidden>
-              Role
-            </option>
-            <option value="value1">Snowman</option>
-            <option value="value2">Pine tree</option>
-            <option value="value3">Deer</option>
-            <option value="value4">Wind</option>
-            <option value="value5">Frost</option>
-            <option value="value6">Ice</option>
-          </select>
+          <input
+            className="custom-select"
+            type="text"
+            placeholder="Your Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
           <input
             type="text"
-            placeholder="Type Your Wish"
+            placeholder="Your Message"
             className="custom-input"
+            value={text}
+            onChange={(e) => setText(e.target.value)}
           />
-          <div className="icon-container">
-            <img src={assets.sent_message} alt="Deer Icon" />
-          </div>
         </div>
+
+        <div onClick={handleSendMessage} className="icon-container">
+          <img
+            style={{ background: 'none' }}
+            src={assets.sent_message}
+            alt="Deer Icon"
+          />
+        </div>
+      </div>
+
+      <div className="chat-messages">
+        {messages.map((msg) => (
+          <div key={msg._id} className="chat-message">
+            <strong>{msg.name}:</strong> {msg.text}
+          </div>
+        ))}
       </div>
     </div>
   )
