@@ -82,20 +82,12 @@ const TimerCounter = () => {
   const [startSnowAnimation, setStartSnowAnimation] = useState(false)
   const [showGift, setShowGift] = useState(false)
   const [isFullScreen, setIsFullScreen] = useState(false)
-  const [volume, setVolume] = useState(
-    () => Number(localStorage.getItem('volume')) || 1
-  )
+  const [volume, setVolume] = useState(1)
   const [showVolumeControl, setShowVolumeControl] = useState(false)
   const [showVolumeIcon, setShowVolumeIcon] = useState(false)
   const [showSongSelectionIcon, setShowSongSelectionIcon] = useState(false)
   const [showSongModal, setShowSongModal] = useState(false)
-  const [audio, setAudio] = useState(() => {
-    const savedSong = localStorage.getItem('selectedSong') || assets.theme_song
-    const audioInstance = new Audio(savedSong)
-    audioInstance.currentTime =
-      Number(localStorage.getItem('audioCurrentTime')) || 0
-    return audioInstance
-  })
+  const [audio, setAudio] = useState(new Audio(`${assets.theme_song}`))
   const timerCompletedRef = useRef(false)
 
   const songs = [
@@ -118,24 +110,15 @@ const TimerCounter = () => {
 
   useEffect(() => {
     audio.volume = volume
-    localStorage.setItem('volume', volume)
 
     const handleAudioEnded = () => {
       setShowSongSelectionIcon(true)
       setShowVolumeIcon(false)
     }
 
-    const saveAudioState = () => {
-      localStorage.setItem('audioCurrentTime', audio.currentTime)
-      localStorage.setItem('selectedSong', audio.src)
-    }
-
     audio.addEventListener('ended', handleAudioEnded)
-    window.addEventListener('beforeunload', saveAudioState)
-
     return () => {
       audio.removeEventListener('ended', handleAudioEnded)
-      window.removeEventListener('beforeunload', saveAudioState)
     }
   }, [volume, audio])
 
@@ -157,12 +140,6 @@ const TimerCounter = () => {
     const handleVisibilityChange = () => {
       if (document.visibilityState === 'visible' && timerCompletedRef.current) {
         setShowTextAnimation(true)
-        const savedSong =
-          localStorage.getItem('selectedSong') || assets.theme_song
-        const savedTime = Number(localStorage.getItem('audioCurrentTime')) || 0
-        audio.src = savedSong
-        audio.currentTime = savedTime
-        audio.play()
       }
     }
 
@@ -170,7 +147,7 @@ const TimerCounter = () => {
     return () => {
       document.removeEventListener('visibilitychange', handleVisibilityChange)
     }
-  }, [audio])
+  }, [])
 
   useEffect(() => {
     if (screenfull.isEnabled) {
@@ -198,6 +175,13 @@ const TimerCounter = () => {
     setShowGift(true)
   }
 
+  const formatTime = (seconds) => {
+    const hrs = String(Math.floor(seconds / 3600)).padStart(2, '0')
+    const mins = String(Math.floor((seconds % 3600) / 60)).padStart(2, '0')
+    const secs = String(seconds % 60).padStart(2, '0')
+    return `${hrs} : ${mins} : ${secs}`
+  }
+
   const handleVolumeIconClick = () => {
     setShowVolumeControl((prev) => !prev)
   }
@@ -219,15 +203,6 @@ const TimerCounter = () => {
     setShowVolumeIcon(true)
     setShowSongModal(false)
     setShowSongSelectionIcon(false)
-    localStorage.setItem('selectedSong', song.url)
-    localStorage.setItem('audioCurrentTime', 0)
-  }
-
-  const formatTime = (seconds) => {
-    const hrs = String(Math.floor(seconds / 3600)).padStart(2, '0')
-    const mins = String(Math.floor((seconds % 3600) / 60)).padStart(2, '0')
-    const secs = String(seconds % 60).padStart(2, '0')
-    return `${hrs} : ${mins} : ${secs}`
   }
 
   return (
