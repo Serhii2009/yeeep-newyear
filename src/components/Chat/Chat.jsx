@@ -11,7 +11,9 @@ const Chat = () => {
   useEffect(() => {
     const fetchMessages = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/messages')
+        const response = await fetch(
+          'https://yeeep-newyear-backend.onrender.com/api/messages'
+        ) // Оновлений URL
         const data = await response.json()
         setMessages(data)
       } catch (error) {
@@ -31,7 +33,7 @@ const Chat = () => {
 
     try {
       const response = await fetch(
-        'https://yeeep-newyear-backend.onrender.com/api/messages',
+        'https://yeeep-newyear-backend.onrender.com/api/messages', // Оновлений URL
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -75,7 +77,7 @@ const Chat = () => {
           <img
             style={{ background: 'none' }}
             src={assets.sent_message}
-            alt="Deer Icon"
+            alt="Send Icon"
           />
         </div>
       </div>

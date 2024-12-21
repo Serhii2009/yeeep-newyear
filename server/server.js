@@ -9,11 +9,11 @@ const app = express()
 const port = process.env.PORT || 5000
 
 // Middleware
-app.use(cors())
-app.use(express.json())
+app.use(cors()) // Дозволяє усім доменам доступ до API
+app.use(express.json()) // Для парсингу JSON
 
 // Підключення до MongoDB
-const mongoURI = process.env.MONGO_URI // Використовуємо змінну середовища
+const mongoURI = process.env.MONGO_URI // Використовуємо змінну середовища для підключення
 mongoose
   .connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('MongoDB connected'))
