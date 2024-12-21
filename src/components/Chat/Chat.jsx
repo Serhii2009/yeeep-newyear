@@ -14,9 +14,13 @@ const Chat = () => {
         const response = await fetch(
           'https://yeeep-newyear-backend.onrender.com/api/messages'
         )
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`)
+        }
+
         const data = await response.json()
 
-        // Логування отриманих даних
         console.log('Fetched messages:', data)
 
         if (Array.isArray(data)) {
@@ -25,7 +29,7 @@ const Chat = () => {
           console.error('Expected array but got:', data)
         }
       } catch (error) {
-        console.error('Error fetching messages:', error)
+        console.error('Error fetching messages:', error.message || error)
       }
     }
 
@@ -50,14 +54,14 @@ const Chat = () => {
       )
 
       if (!response.ok) {
-        throw new Error('Error sending message')
+        throw new Error(`Error sending message: ${response.status}`)
       }
 
       const newMessage = await response.json()
       setMessages([newMessage, ...messages]) // Додаємо нове повідомлення зверху
       setText('') // Очищення текстового поля
     } catch (error) {
-      console.error('Error sending message:', error)
+      console.error('Error sending message:', error.message || error)
     }
   }
 

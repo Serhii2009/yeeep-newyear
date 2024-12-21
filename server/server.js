@@ -9,7 +9,12 @@ const app = express()
 const port = process.env.PORT || 5000
 
 // Middleware
-app.use(cors())
+const corsOptions = {
+  origin: 'https://yeeep-newyear.onrender.com',
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true,
+}
+app.use(cors(corsOptions))
 app.use(express.json())
 
 // Підключення до MongoDB
@@ -26,9 +31,10 @@ mongoose
 app.get('/api/messages', async (req, res) => {
   try {
     const messages = await Message.find().sort({ createdAt: -1 })
+    console.log('Messages fetched:', messages) // Додано логування
     res.status(200).json(messages)
   } catch (error) {
-    console.error(error)
+    console.error('Error fetching messages:', error)
     res.status(500).json({ message: 'Error fetching messages' })
   }
 })
@@ -46,7 +52,7 @@ app.post('/api/messages', async (req, res) => {
     await newMessage.save()
     res.status(201).json(newMessage)
   } catch (error) {
-    console.error(error)
+    console.error('Error saving message:', error)
     res.status(500).json({ message: 'Error saving message' })
   }
 })
