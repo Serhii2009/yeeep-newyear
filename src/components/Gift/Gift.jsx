@@ -26,7 +26,7 @@ const Gift = () => {
     setSelectedGift(randomFile)
     localStorage.setItem('userGift', JSON.stringify(randomFile))
     const fileUrl = window.location.origin + randomFile
-    window.open(fileUrl, '_blank')
+    window.open(fileUrl, '_blank', 'noopener,noreferrer')
   }
 
   return (
