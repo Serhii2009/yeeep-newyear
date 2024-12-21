@@ -9,12 +9,7 @@ const app = express()
 const port = process.env.PORT || 5000
 
 // Middleware
-const corsOptions = {
-  origin: 'https://yeeep-newyear.onrender.com',
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  credentials: true,
-}
-app.use(cors(corsOptions))
+app.use(cors())
 app.use(express.json())
 
 // Підключення до MongoDB
@@ -22,19 +17,15 @@ const mongoURI = process.env.MONGO_URI // Використовуємо змін�
 mongoose
   .connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('MongoDB connected'))
-  .catch((err) => {
-    console.error('Error connecting to MongoDB:', err)
-    process.exit(1) // Завершення програми у випадку помилки з підключенням
-  })
+  .catch((err) => console.log('Error connecting to MongoDB:', err))
 
 // Отримання всіх повідомлень
 app.get('/api/messages', async (req, res) => {
   try {
     const messages = await Message.find().sort({ createdAt: -1 })
-    console.log('Messages fetched:', messages) // Додано логування
     res.status(200).json(messages)
   } catch (error) {
-    console.error('Error fetching messages:', error)
+    console.error(error)
     res.status(500).json({ message: 'Error fetching messages' })
   }
 })
@@ -52,12 +43,12 @@ app.post('/api/messages', async (req, res) => {
     await newMessage.save()
     res.status(201).json(newMessage)
   } catch (error) {
-    console.error('Error saving message:', error)
+    console.error(error)
     res.status(500).json({ message: 'Error saving message' })
   }
 })
 
 // Запуск сервера
 app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`)
+  console.log(`Server is running on https://yeeep-newyear-backend.onrender.com`)
 })

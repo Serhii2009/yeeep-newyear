@@ -1,6 +1,5 @@
 import './Chat.css'
 import { useState, useEffect } from 'react'
-import { assets } from '../../assets/assets'
 
 const Chat = () => {
   const [name, setName] = useState('')
@@ -14,22 +13,10 @@ const Chat = () => {
         const response = await fetch(
           'https://yeeep-newyear-backend.onrender.com/api/messages'
         )
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`)
-        }
-
         const data = await response.json()
-
-        console.log('Fetched messages:', data)
-
-        if (Array.isArray(data)) {
-          setMessages(data)
-        } else {
-          console.error('Expected array but got:', data)
-        }
+        setMessages(data)
       } catch (error) {
-        console.error('Error fetching messages:', error.message || error)
+        console.error('Error fetching messages:', error)
       }
     }
 
@@ -53,15 +40,11 @@ const Chat = () => {
         }
       )
 
-      if (!response.ok) {
-        throw new Error(`Error sending message: ${response.status}`)
-      }
-
       const newMessage = await response.json()
       setMessages([newMessage, ...messages]) // Додаємо нове повідомлення зверху
       setText('') // Очищення текстового поля
     } catch (error) {
-      console.error('Error sending message:', error.message || error)
+      console.error('Error sending message:', error)
     }
   }
 
@@ -71,31 +54,20 @@ const Chat = () => {
         <h3>Chat</h3>
       </div>
 
-      <div className="chat-message-section">
-        <div className="chat-message-field">
-          <input
-            className="custom-select"
-            type="text"
-            placeholder="Your Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <input
-            type="text"
-            placeholder="Your Message"
-            className="custom-input"
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-          />
-        </div>
-
-        <div onClick={handleSendMessage} className="icon-container">
-          <img
-            style={{ background: 'none' }}
-            src={assets.sent_message}
-            alt="Deer Icon"
-          />
-        </div>
+      <div className="chat-input">
+        <input
+          type="text"
+          placeholder="Your Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+        <input
+          type="text"
+          placeholder="Your Message"
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+        />
+        <button onClick={handleSendMessage}>Send</button>
       </div>
 
       <div className="chat-messages">
