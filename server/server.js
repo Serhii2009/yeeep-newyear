@@ -9,15 +9,18 @@ const app = express()
 const port = process.env.PORT || 5000
 
 // Middleware
-app.use(cors()) // Дозволяє усім доменам доступ до API
-app.use(express.json()) // Для парсингу JSON
+app.use(cors())
+app.use(express.json())
 
 // Підключення до MongoDB
-const mongoURI = process.env.MONGO_URI // Використовуємо змінну середовища для підключення
+const mongoURI = process.env.MONGO_URI // Використовуємо змінну середовища
 mongoose
   .connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('MongoDB connected'))
-  .catch((err) => console.log('Error connecting to MongoDB:', err))
+  .catch((err) => {
+    console.error('Error connecting to MongoDB:', err)
+    process.exit(1) // Завершення програми у випадку помилки з підключенням
+  })
 
 // Отримання всіх повідомлень
 app.get('/api/messages', async (req, res) => {

@@ -13,9 +13,17 @@ const Chat = () => {
       try {
         const response = await fetch(
           'https://yeeep-newyear-backend.onrender.com/api/messages'
-        ) // Оновлений URL
+        )
         const data = await response.json()
-        setMessages(data)
+
+        // Логування отриманих даних
+        console.log('Fetched messages:', data)
+
+        if (Array.isArray(data)) {
+          setMessages(data)
+        } else {
+          console.error('Expected array but got:', data)
+        }
       } catch (error) {
         console.error('Error fetching messages:', error)
       }
@@ -33,13 +41,17 @@ const Chat = () => {
 
     try {
       const response = await fetch(
-        'https://yeeep-newyear-backend.onrender.com/api/messages', // Оновлений URL
+        'https://yeeep-newyear-backend.onrender.com/api/messages',
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ name, text }),
         }
       )
+
+      if (!response.ok) {
+        throw new Error('Error sending message')
+      }
 
       const newMessage = await response.json()
       setMessages([newMessage, ...messages]) // Додаємо нове повідомлення зверху
@@ -77,7 +89,7 @@ const Chat = () => {
           <img
             style={{ background: 'none' }}
             src={assets.sent_message}
-            alt="Send Icon"
+            alt="Deer Icon"
           />
         </div>
       </div>

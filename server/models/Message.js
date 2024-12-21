@@ -1,21 +1,12 @@
 /* eslint-disable no-undef */
 const mongoose = require('mongoose')
 
-const messageSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
+const MessageSchema = new mongoose.Schema(
+  {
+    name: { type: String, required: true },
+    text: { type: String, required: true },
   },
-  text: {
-    type: String,
-    required: true,
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-})
+  { timestamps: true }
+)
 
-const Message = mongoose.model('Message', messageSchema)
-
-module.exports = Message
+module.exports = mongoose.model('Message', MessageSchema)
